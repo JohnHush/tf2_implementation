@@ -2,9 +2,11 @@ import tensorflow as tf
 import os
 import time
 import matplotlib.pyplot as plt
+from pathlib import Path
+
 from model.generators import Generator
 from model.discriminators import Discriminator
-from data.aligned_dataset import test_ds
+from data.aligned_dataset import test_ds, train_ds
 
 def generator_loss(disc_generated_output, gen_output, target):
     loss_object = tf.keras.losses.BinaryCrossentropy(from_logits=True)
@@ -43,8 +45,10 @@ def generate_images(model, test_input, tar):
       plt.show()
 
 def train():
-    train_dataset = test_ds('../dataset/facades/train/*.jpg')
-    test_dataset = test_ds('../dataset/facades/test/*.jpg')
+    BASE_PATH = Path(__file__)
+
+    train_dataset = train_ds( str(BASE_PATH.parents[1].joinpath('dataset/facades/train/*.jpg') ) )
+    test_dataset  = test_ds( str( BASE_PATH.parents[1].joinpath('dataset/facades/test/*.jpg') ) )
 
     generator = Generator()
     discriminator = Discriminator()
