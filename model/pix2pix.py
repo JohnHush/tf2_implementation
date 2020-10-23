@@ -3,6 +3,7 @@ import os
 import time
 import matplotlib.pyplot as plt
 from pathlib import Path
+from IPython import display
 
 from model.generators import Generator
 from model.discriminators import Discriminator
@@ -102,7 +103,7 @@ def train():
     for epoch in range(epochs):
         start = time.time()
 
-        # display.clear_output(wait=True)
+        display.clear_output(wait=True)
 
         for example_input, example_target in test_dataset.take(1):
             generate_images(generator, example_input, example_target)
